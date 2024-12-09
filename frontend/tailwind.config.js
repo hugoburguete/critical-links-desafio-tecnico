@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['"Nunito Sans"', ...defaultTheme.fontFamily.sans],
+        roboto: ['"Roboto"'],
       },
       colors: {
         grey: '#5B5B5B',

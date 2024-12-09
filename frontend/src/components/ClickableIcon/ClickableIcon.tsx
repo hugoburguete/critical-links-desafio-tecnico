@@ -1,9 +1,11 @@
 import { ReactComponent as BinIcon } from './icons/bin.svg';
+import { ReactComponent as CloseIcon } from './icons/close.svg';
 import { ReactComponent as PencilIcon } from './icons/pencil.svg';
 
 export enum IconType {
   Pencil,
   Bin,
+  Close,
 }
 
 type Props = React.DetailedHTMLProps<
@@ -20,6 +22,8 @@ const ClickableIcon = ({ iconType, ...rest }: Props): React.JSX.Element => {
         return <BinIcon />;
       case IconType.Pencil:
         return <PencilIcon />;
+      case IconType.Close:
+        return <CloseIcon />;
       default:
         return null;
     }

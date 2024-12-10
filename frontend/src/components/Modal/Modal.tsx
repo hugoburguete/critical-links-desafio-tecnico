@@ -50,12 +50,10 @@ const Modal = ({
             {title}
           </h2>
 
-          <div>
-            <ClickableIcon
-              iconType={IconType.Close}
-              onClick={() => onClose?.()}
-            />
-          </div>
+          <ClickableIcon
+            iconType={IconType.Close}
+            onClick={() => onClose?.()}
+          />
         </div>
 
         {/* Modal body */}

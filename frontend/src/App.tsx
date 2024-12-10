@@ -15,6 +15,7 @@ import { createClass, getClasses, updateClass } from './api/classes';
 import { SubmitStudentEvent } from './components/StudentFormModal/StudentFormModal';
 import ClassFormModal from './components/ClassFormModal';
 import { SubmitClassEvent } from './components/ClassFormModal/ClassFormModal';
+import ManageClassModal from './components/ManageClassModal';
 
 function App() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -25,6 +26,8 @@ function App() {
   const [isClassFormModalOpen, setIsClassFormModalOpen] =
     useState<boolean>(false);
   const [classToUpdate, setClassToUpdate] = useState<SchoolClass | null>(null);
+  const [isManageClassModalOpen, setIsManageClassModalOpen] =
+    useState<boolean>(false);
 
   const loadData = async () => {
     const students = await getStudents();
@@ -89,7 +92,9 @@ function App() {
           <Button onClick={() => setIsClassFormModalOpen(true)}>
             Create class
           </Button>
-          <Button>Manage classes</Button>
+          <Button onClick={() => setIsManageClassModalOpen(true)}>
+            Manage classes
+          </Button>
         </div>
       </div>
       <div className="flex flex-wrap gap-[45px]">
@@ -114,6 +119,25 @@ function App() {
         onClose={() => {
           setStudentToUpdate(null);
           setIsStudentFormModalOpen(false);
+        }}
+      />
+
+      <ManageClassModal
+        title="Manage classes"
+        classes={schoolClasses}
+        isOpen={isManageClassModalOpen}
+        onEditClick={(schoolClass: SchoolClass) => {
+          setClassToUpdate(schoolClass);
+          setIsClassFormModalOpen(true);
+        }}
+        onRemoveClick={(schoolClass: SchoolClass) => {
+          // TODO
+          // setClassToUpdate(schoolClass);
+          // setIsClassFormModalOpen(true)
+        }}
+        onClose={() => {
+          setClassToUpdate(null);
+          setIsManageClassModalOpen(false);
         }}
       />
 

@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import ClickableIcon from '../ClickableIcon';
 import { IconType } from '../ClickableIcon/ClickableIcon';
 import cx from 'classnames';
@@ -20,17 +21,27 @@ const Modal = ({
   className,
   ...rest
 }: Props): React.JSX.Element => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === ref.current) {
+      onClose?.();
+    }
+  };
+
   return (
     <div
+      ref={ref}
       className={cx(
-        'fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center',
+        'fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center ',
         {
           hidden: !isOpen,
         },
       )}
+      onClick={handleOutsideClick}
     >
       <div
-        className={`shadow-md bg-white rounded-md px-6 py-4 ${className}`}
+        className={`modal-box-shadow bg-white rounded-md px-6 py-4 ${className}`}
         {...rest}
       >
         {/* Modal header */}

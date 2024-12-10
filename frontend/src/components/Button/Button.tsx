@@ -1,12 +1,34 @@
+import cx from 'classnames';
+
 type Props = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
-> & {};
+> & {
+  appearance?: ButtonAppearance;
+};
 
-const Button = ({ children, className, ...rest }: Props): React.JSX.Element => {
+export enum ButtonAppearance {
+  Primary,
+  Secondary,
+}
+
+const Button = ({
+  children,
+  className,
+  appearance = ButtonAppearance.Primary,
+  ...rest
+}: Props): React.JSX.Element => {
   return (
     <button
-      className={`rounded-lg p-[14px] bg-blue text-white w-[170px] text-center text-lg  leading-6 ${className}`}
+      className={cx(
+        {
+          'rounded-lg p-[14px] bg-blue text-white w-[170px] text-center text-lg  leading-6':
+            appearance === ButtonAppearance.Primary,
+          'px-2 py-[6px] text-blue bg-none outline-none uppercase font-medium font-roboto tracking-[0.4px]':
+            appearance === ButtonAppearance.Secondary,
+        },
+        className,
+      )}
       type="button"
       {...rest}
     >

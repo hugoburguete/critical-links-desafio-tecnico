@@ -5,6 +5,8 @@ import Button from '../Button';
 import FormInput from '../forms/FormInput';
 import Modal from '../Modal';
 import { Props as ModalProps } from '../Modal/Modal';
+import { ButtonAppearance } from '../Button/Button';
+import FormSelect from '../forms/FormSelect/FormSelect';
 
 export type CreateStudentEvent = (student: Student) => void;
 
@@ -22,8 +24,7 @@ const StudentFormModal = ({
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [studentNum, setStudentNum] = useState<number>();
-  // FIXME: Hardcoded
-  const [schoolClass, setSchoolClass] = useState('6756f324301c21ac2856baff');
+  const [schoolClass, setSchoolClass] = useState(schoolClasses?.[0]._id);
 
   return (
     <Modal {...modalProps} className="min-w-[380px]">
@@ -44,21 +45,39 @@ const StudentFormModal = ({
           onChange={(e) => setEmail(e.target.value)}
         />
         <FormInput
+          className="mb-[20px]"
           label="Student ID"
           value={studentNum}
           onChange={(e) => setStudentNum(+e.target.value)}
         />
+        <FormSelect
+          label="Class"
+          value={schoolClass}
+          options={schoolClasses.map((schoolClass) => {
+            return {
+              label: `${schoolClass.year}${schoolClass.name}`,
+              value: `${schoolClass._id}`,
+            };
+          })}
+          onChange={(e) => setSchoolClass(e.target.value)}
+        />
 
-        <div className="flex justify-end">
-          <Button onClick={() => modalProps.onClose?.()}>Cancel</Button>
+        <div className="flex justify-end gap-2">
           <Button
+            appearance={ButtonAppearance.Secondary}
+            onClick={() => modalProps.onClose?.()}
+          >
+            Cancel
+          </Button>
+          <Button
+            appearance={ButtonAppearance.Secondary}
             onClick={() =>
               onCreateStudent?.({
                 firstname,
                 lastname,
                 email,
                 studentNum: studentNum || 0,
-                class: schoolClass,
+                class: schoolClass || '',
               })
             }
           >

@@ -29,6 +29,7 @@ function App() {
 
   const createStudentHandler: CreateStudentEvent = async (student: Student) => {
     await createStudent(student);
+    setIsCreateStudentModalOpen(false);
     loadData();
   };
 

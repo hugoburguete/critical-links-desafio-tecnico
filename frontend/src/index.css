@@ -3,3 +3,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.modal-box-shadow {
+  /* TODO: Translate to tailwind */
+  box-shadow: 0px 9px 46px 8px #0000001f;
+}

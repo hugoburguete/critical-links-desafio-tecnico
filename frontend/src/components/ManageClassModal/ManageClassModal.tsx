@@ -19,7 +19,7 @@ const ManageClassModal = ({
   ...modalProps
 }: Props): React.JSX.Element => {
   return (
-    <Modal {...modalProps} className="min-w-[284px]">
+    <Modal {...modalProps} className="w-full max-w-[284px]">
       <table className="w-full  mb-8">
         <thead>
           <tr>

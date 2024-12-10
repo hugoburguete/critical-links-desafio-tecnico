@@ -32,7 +32,7 @@ const ClassFormModal = ({
   };
 
   return (
-    <Modal {...modalProps} className="min-w-[380px]">
+    <Modal {...modalProps} className="w-full max-w-[380px]">
       <form action="">
         <FormInput
           label="Name"

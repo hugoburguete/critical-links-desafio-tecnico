@@ -61,7 +61,7 @@ const StudentFormModal = ({
   };
 
   return (
-    <Modal {...modalProps} className="min-w-[380px]">
+    <Modal {...modalProps} className="w-full max-w-[380px]">
       <form ref={formRef} action="" onSubmit={handleFormSubmit} noValidate>
         <FormInput
           data-testid="input-firstname"

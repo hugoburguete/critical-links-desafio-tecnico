@@ -9,7 +9,7 @@ type Props = ModalProps & {
 
 const DeleteModal = ({ onConfirm, ...modalProps }: Props) => {
   return (
-    <Modal {...modalProps} className="min-w-[380px]">
+    <Modal {...modalProps} className="w-full max-w-[380px]">
       <div className="flex justify-end gap-2">
         <Button
           appearance={ButtonAppearance.Secondary}

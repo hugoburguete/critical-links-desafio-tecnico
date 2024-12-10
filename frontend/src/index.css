@@ -9,7 +9,12 @@
   box-shadow: 0px 9px 46px 8px #0000001f;
 }
 
+.card-box-shadow {
+  /* TODO: Translate to tailwind */
+  box-shadow: 0px 4px 4px 0px #00000040;
+}
+
 .funky-table-row-color {
-  background: linear-gradient(0deg, #C2C9D1, #C2C9D1),
-  linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
+  background: linear-gradient(0deg, #c2c9d1, #c2c9d1),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9));
 }

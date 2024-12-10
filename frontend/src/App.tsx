@@ -16,9 +16,9 @@ import { SubmitClassEvent } from './components/ClassFormModal/ClassFormModal';
 import DeleteModal from './components/DeleteModal';
 import Header from './components/Header';
 import ManageClassModal from './components/ManageClassModal';
-import StudentCard from './components/StudentCard';
 import StudentFormModal from './components/StudentFormModal';
 import { SubmitStudentEvent } from './components/StudentFormModal/StudentFormModal';
+import StudentList from './components/StudentList';
 import { SchoolClass } from './types/Class';
 import { Student } from './types/Student';
 
@@ -73,7 +73,6 @@ function App() {
     schoolClass: SchoolClass,
   ) => {
     if (classToUpdate) {
-      // TODO: Fix cors issue for PATCH requests.
       await updateClass(schoolClass);
     } else {
       await createClass(schoolClass);
@@ -94,7 +93,6 @@ function App() {
     setIsDeleteModalOpen(false);
   };
 
-  // FIXME: paddings not 100% accurate
   return (
     <div className="p-7 lg:py-4 lg:px-10">
       <Header
@@ -103,18 +101,11 @@ function App() {
         onManageClassClick={() => setIsManageClassModalOpen(true)}
       />
 
-      <div className="flex flex-wrap gap-[45px]">
-        {students.map((student) => {
-          return (
-            <StudentCard
-              key={student._id}
-              student={student}
-              onEditClick={handleEditStudentBtnClick}
-              onRemoveClick={handleRemoveStudentBtnClick}
-            />
-          );
-        })}
-      </div>
+      <StudentList
+        students={students}
+        onEditClick={handleEditStudentBtnClick}
+        onRemoveClick={handleRemoveStudentBtnClick}
+      />
 
       <StudentFormModal
         schoolClasses={schoolClasses}

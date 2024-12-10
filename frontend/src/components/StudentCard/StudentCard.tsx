@@ -13,23 +13,22 @@ const StudentCard = ({
   onEditClick,
   onRemoveClick,
 }: Props): React.JSX.Element => {
-  // FIXME: Drop shadow is not correct.
   return (
-    <div className="rounded-3xl bg-white shadow-sm p-5">
+    <div className="w-full rounded-3xl bg-white card-box-shadow p-5">
       {/* Card body */}
-      <div className="flex gap-[30px]">
+      <div className="flex gap-[30px] justify-between">
         {/* Profile picture */}
-        <div className="rounded-full bg-lightgrey w-[90px] h-[90px]"></div>
+        <div className="hidden xl:block rounded-full bg-lightgrey w-[90px] h-[90px]"></div>
 
         {/* Details */}
-        <div>
-          <p className="font-sans font-bold text-[22px] leading-[30px]">
+        <div className="min-w-0">
+          <p className="font-sans font-bold text-[22px] leading-[30px] overflow-hidden text-ellipsis">
             {`${student.firstname} ${student.lastname}`}
           </p>
-          <p className="font-sans font-light text-[22px] leading-[30px]">
+          <p className="font-sans font-light text-[22px] leading-[30px] overflow-hidden text-ellipsis">
             {student.email}
           </p>
-          <p className="font-sans text-dimmed font-extralight text-[22px] leading-[30px]">
+          <p className="font-sans text-dimmed font-extralight text-[22px] leading-[30px] overflow-hidden text-ellipsis">
             ID: {student.studentNum}
           </p>
         </div>

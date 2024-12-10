@@ -36,6 +36,13 @@ const StudentFormModal = ({
     setSchoolClass(student?.class || schoolClasses[0]?._id);
   }, [student, schoolClasses]);
 
+  const resetForm = () => {
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setStudentNum('');
+  };
+
   return (
     <Modal {...modalProps} className="min-w-[380px]">
       <form action="">
@@ -81,7 +88,7 @@ const StudentFormModal = ({
           </Button>
           <Button
             appearance={ButtonAppearance.Secondary}
-            onClick={() =>
+            onClick={() => {
               onSubmitStudent?.({
                 _id: student?._id,
                 firstname,
@@ -89,8 +96,9 @@ const StudentFormModal = ({
                 email,
                 studentNum: +studentNum || 0,
                 class: schoolClass || '',
-              })
-            }
+              });
+              resetForm();
+            }}
           >
             {student ? 'Edit' : 'Create'}
           </Button>

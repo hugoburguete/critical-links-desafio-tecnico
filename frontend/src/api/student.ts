@@ -6,7 +6,7 @@ import { API_URL } from './common';
  */
 export const createStudent = async (student: Student) => {
   // using fetch for the sake of simplicity.
-  const response = await fetch('http://localhost:3000/student', {
+  await fetch('http://localhost:3000/student', {
     method: 'POST',
     body: JSON.stringify(student),
     headers: {
@@ -14,9 +14,6 @@ export const createStudent = async (student: Student) => {
       'Content-Type': 'application/json',
     },
   });
-  const students: Student[] = (await response.json()) || [];
-
-  return students;
 };
 
 /**

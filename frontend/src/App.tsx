@@ -11,8 +11,10 @@ import { Student } from './types/Student';
 import H1 from './typography/H1';
 import StudentFormModal from './components/StudentFormModal';
 import { SchoolClass } from './types/Class';
-import { getClasses } from './api/classes';
+import { createClass, getClasses, updateClass } from './api/classes';
 import { SubmitStudentEvent } from './components/StudentFormModal/StudentFormModal';
+import ClassFormModal from './components/ClassFormModal';
+import { SubmitClassEvent } from './components/ClassFormModal/ClassFormModal';
 
 function App() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -20,6 +22,9 @@ function App() {
   const [isStudentFormModalOpen, setIsStudentFormModalOpen] =
     useState<boolean>(false);
   const [studentToUpdate, setStudentToUpdate] = useState<Student | null>(null);
+  const [isClassFormModalOpen, setIsClassFormModalOpen] =
+    useState<boolean>(false);
+  const [classToUpdate, setClassToUpdate] = useState<SchoolClass | null>(null);
 
   const loadData = async () => {
     const students = await getStudents();
@@ -58,6 +63,19 @@ function App() {
     setIsStudentFormModalOpen(true);
   };
 
+  const handleClassSubmit: SubmitClassEvent = async (
+    schoolClass: SchoolClass,
+  ) => {
+    if (classToUpdate) {
+      // TODO: Fix cors issue for PATCH requests.
+      await updateClass(schoolClass);
+    } else {
+      await createClass(schoolClass);
+    }
+    setIsClassFormModalOpen(false);
+    loadData();
+  };
+
   // FIXME: paddings not 100% accurate
   return (
     <div className="py-4 px-10">
@@ -65,14 +83,12 @@ function App() {
         <H1>Student Manager</H1>
 
         <div className="flex gap-[14px]">
-          <Button
-            onClick={() => {
-              setIsStudentFormModalOpen(true);
-            }}
-          >
+          <Button onClick={() => setIsStudentFormModalOpen(true)}>
             Create student
           </Button>
-          <Button>Create class</Button>
+          <Button onClick={() => setIsClassFormModalOpen(true)}>
+            Create class
+          </Button>
           <Button>Manage classes</Button>
         </div>
       </div>
@@ -98,6 +114,17 @@ function App() {
         onClose={() => {
           setStudentToUpdate(null);
           setIsStudentFormModalOpen(false);
+        }}
+      />
+
+      <ClassFormModal
+        title="Create class"
+        schoolClass={classToUpdate}
+        isOpen={isClassFormModalOpen}
+        onSubmitClass={handleClassSubmit}
+        onClose={() => {
+          setClassToUpdate(null);
+          setIsClassFormModalOpen(false);
         }}
       />
     </div>

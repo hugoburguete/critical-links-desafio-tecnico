@@ -6,7 +6,7 @@ import { API_URL } from './common';
  */
 export const createClass = async (SchoolClass: SchoolClass) => {
   // using fetch for the sake of simplicity.
-  await fetch('http://localhost:3000/school-class', {
+  await fetch(`${API_URL}/school-class`, {
     method: 'POST',
     body: JSON.stringify(SchoolClass),
     headers: {
@@ -21,7 +21,7 @@ export const createClass = async (SchoolClass: SchoolClass) => {
  */
 export const getClasses = async (): Promise<SchoolClass[]> => {
   // using fetch for the sake of simplicity.
-  const response = await fetch('http://localhost:3000/school-class');
+  const response = await fetch(`${API_URL}/school-class`);
   const classes: SchoolClass[] = (await response.json()) || [];
 
   return classes;

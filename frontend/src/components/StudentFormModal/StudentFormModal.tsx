@@ -64,6 +64,7 @@ const StudentFormModal = ({
     <Modal {...modalProps} className="min-w-[380px]">
       <form ref={formRef} action="" onSubmit={handleFormSubmit} noValidate>
         <FormInput
+          data-testid="input-firstname"
           type="text"
           label="First name"
           value={firstname}
@@ -71,6 +72,7 @@ const StudentFormModal = ({
           onChange={(e) => setFirstName(e.target.value)}
         />
         <FormInput
+          data-testid="input-lastname"
           type="text"
           required
           label="Last name"
@@ -78,6 +80,7 @@ const StudentFormModal = ({
           onChange={(e) => setLastName(e.target.value)}
         />
         <FormInput
+          data-testid="input-email"
           type="email"
           required
           label="Email"
@@ -85,6 +88,7 @@ const StudentFormModal = ({
           onChange={(e) => setEmail(e.target.value)}
         />
         <FormInput
+          data-testid="input-student-num"
           required
           max={999999}
           type="number"
@@ -113,7 +117,11 @@ const StudentFormModal = ({
           >
             Cancel
           </Button>
-          <Button type="submit" appearance={ButtonAppearance.Secondary}>
+          <Button
+            type="submit"
+            appearance={ButtonAppearance.Secondary}
+            data-testid="input-submit"
+          >
             {student ? 'Edit' : 'Create'}
           </Button>
         </div>

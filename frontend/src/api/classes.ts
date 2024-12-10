@@ -31,7 +31,7 @@ export const getClasses = async (): Promise<SchoolClass[]> => {
  * Updates a class resource.
  */
 export const updateClass = async (schoolClass: SchoolClass) => {
-  await fetch(`${API_URL}/student/${schoolClass._id}`, {
+  await fetch(`${API_URL}/school-class/${schoolClass._id}`, {
     method: 'PATCH',
     body: JSON.stringify(schoolClass),
     headers: {
@@ -46,7 +46,7 @@ export const updateClass = async (schoolClass: SchoolClass) => {
  */
 export const deleteClass = async (classId: string) => {
   // using fetch for the sake of simplicity.
-  await fetch(`${API_URL}/student/${classId}`, {
+  await fetch(`${API_URL}/school-class/${classId}`, {
     method: 'DELETE',
   });
 };

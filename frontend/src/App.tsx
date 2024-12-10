@@ -11,11 +11,17 @@ import { Student } from './types/Student';
 import H1 from './typography/H1';
 import StudentFormModal from './components/StudentFormModal';
 import { SchoolClass } from './types/Class';
-import { createClass, getClasses, updateClass } from './api/classes';
+import {
+  createClass,
+  deleteClass,
+  getClasses,
+  updateClass,
+} from './api/classes';
 import { SubmitStudentEvent } from './components/StudentFormModal/StudentFormModal';
 import ClassFormModal from './components/ClassFormModal';
 import { SubmitClassEvent } from './components/ClassFormModal/ClassFormModal';
 import ManageClassModal from './components/ManageClassModal';
+import DeleteModal from './components/DeleteModal';
 
 function App() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -23,11 +29,14 @@ function App() {
   const [isStudentFormModalOpen, setIsStudentFormModalOpen] =
     useState<boolean>(false);
   const [studentToUpdate, setStudentToUpdate] = useState<Student | null>(null);
+  const [studentToDelete, setStudentToDelete] = useState<Student | null>(null);
   const [isClassFormModalOpen, setIsClassFormModalOpen] =
     useState<boolean>(false);
   const [classToUpdate, setClassToUpdate] = useState<SchoolClass | null>(null);
+  const [classToDelete, setClassToDelete] = useState<SchoolClass | null>(null);
   const [isManageClassModalOpen, setIsManageClassModalOpen] =
     useState<boolean>(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
   const loadData = async () => {
     const students = await getStudents();
@@ -43,7 +52,6 @@ function App() {
 
   const handleStudentSubmit: SubmitStudentEvent = async (student: Student) => {
     if (studentToUpdate) {
-      // TODO: Fix cors issue for PATCH requests.
       await updateStudent(student);
     } else {
       await createStudent(student);
@@ -52,18 +60,14 @@ function App() {
     loadData();
   };
 
-  const handleRemoveStudentBtnClick = async (student: Student) => {
-    if (student._id) {
-      await deleteStudent(student._id);
-    }
-
-    // TODO: Fix cors issue for DELETE requests...
-    loadData();
-  };
-
   const handleEditStudentBtnClick = async (student: Student) => {
     setStudentToUpdate(student);
     setIsStudentFormModalOpen(true);
+  };
+
+  const handleRemoveStudentBtnClick = async (student: Student) => {
+    setStudentToDelete(student);
+    setIsDeleteModalOpen(true);
   };
 
   const handleClassSubmit: SubmitClassEvent = async (
@@ -77,6 +81,18 @@ function App() {
     }
     setIsClassFormModalOpen(false);
     loadData();
+  };
+
+  const handleDelete = async () => {
+    if (classToDelete?._id) {
+      await deleteClass(classToDelete._id);
+    }
+    if (studentToDelete?._id) {
+      await deleteStudent(studentToDelete._id);
+    }
+
+    loadData();
+    setIsDeleteModalOpen(false);
   };
 
   // FIXME: paddings not 100% accurate
@@ -131,11 +147,11 @@ function App() {
           setIsClassFormModalOpen(true);
         }}
         onRemoveClick={(schoolClass: SchoolClass) => {
-          // TODO
-          // setClassToUpdate(schoolClass);
-          // setIsClassFormModalOpen(true)
+          setClassToDelete(schoolClass);
+          setIsDeleteModalOpen(true);
         }}
         onClose={() => {
+          setClassToDelete(null);
           setClassToUpdate(null);
           setIsManageClassModalOpen(false);
         }}
@@ -150,6 +166,17 @@ function App() {
           setClassToUpdate(null);
           setIsClassFormModalOpen(false);
         }}
+      />
+
+      <DeleteModal
+        title="Are you sure you want to delete?"
+        isOpen={isDeleteModalOpen}
+        onClose={() => {
+          setClassToDelete(null);
+          setStudentToDelete(null);
+          setIsDeleteModalOpen(false);
+        }}
+        onConfirm={handleDelete}
       />
     </div>
   );

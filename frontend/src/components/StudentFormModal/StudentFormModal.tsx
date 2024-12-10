@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SchoolClass } from '../../types/Class';
 import { Student } from '../../types/Student';
 import Button from '../Button';
@@ -22,6 +22,7 @@ const StudentFormModal = ({
   onSubmitStudent,
   ...modalProps
 }: Props): React.JSX.Element => {
+  const formRef = useRef<HTMLFormElement>(null);
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -43,31 +44,57 @@ const StudentFormModal = ({
     setStudentNum('');
   };
 
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const isValid = formRef.current?.reportValidity();
+    if (isValid) {
+      onSubmitStudent?.({
+        _id: student?._id,
+        firstname,
+        lastname,
+        email,
+        studentNum: +studentNum || 0,
+        class: schoolClass || '',
+      });
+      resetForm();
+    }
+  };
+
   return (
     <Modal {...modalProps} className="min-w-[380px]">
-      <form action="">
+      <form ref={formRef} action="" onSubmit={handleFormSubmit} noValidate>
         <FormInput
+          type="text"
           label="First name"
           value={firstname}
+          required
           onChange={(e) => setFirstName(e.target.value)}
         />
         <FormInput
+          type="text"
+          required
           label="Last name"
           value={lastname}
           onChange={(e) => setLastName(e.target.value)}
         />
         <FormInput
+          type="email"
+          required
           label="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
         <FormInput
+          required
+          max={999999}
+          type="number"
           className="mb-[20px]"
           label="Student ID"
           value={studentNum}
           onChange={(e) => setStudentNum(e.target.value)}
         />
         <FormSelect
+          required
           label="Class"
           value={schoolClass}
           options={schoolClasses.map((schoolClass) => {
@@ -86,20 +113,7 @@ const StudentFormModal = ({
           >
             Cancel
           </Button>
-          <Button
-            appearance={ButtonAppearance.Secondary}
-            onClick={() => {
-              onSubmitStudent?.({
-                _id: student?._id,
-                firstname,
-                lastname,
-                email,
-                studentNum: +studentNum || 0,
-                class: schoolClass || '',
-              });
-              resetForm();
-            }}
-          >
+          <Button type="submit" appearance={ButtonAppearance.Secondary}>
             {student ? 'Edit' : 'Create'}
           </Button>
         </div>

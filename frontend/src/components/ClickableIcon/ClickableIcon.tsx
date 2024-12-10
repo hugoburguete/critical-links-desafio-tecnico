@@ -1,11 +1,15 @@
 import { ReactComponent as BinIcon } from './icons/bin.svg';
 import { ReactComponent as CloseIcon } from './icons/close.svg';
 import { ReactComponent as PencilIcon } from './icons/pencil.svg';
+import { ReactComponent as CloseMenuIcon } from './icons/close-menu.svg';
+import { ReactComponent as HamburgerMenuIcon } from './icons/hamburger-menu.svg';
 
 export enum IconType {
   Pencil,
   Bin,
   Close,
+  CloseMenu,
+  HamburgerMenu,
 }
 
 export enum IconSize {
@@ -44,6 +48,10 @@ const ClickableIcon = ({
         };
 
         return <CloseIcon {...props} />;
+      case IconType.CloseMenu:
+        return <CloseMenuIcon {...props} />;
+      case IconType.HamburgerMenu:
+        return <HamburgerMenuIcon {...props} />;
       default:
         return null;
     }

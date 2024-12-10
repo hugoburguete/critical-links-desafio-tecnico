@@ -1,27 +1,26 @@
 import { useEffect, useState } from 'react';
 import {
-  createStudent,
-  deleteStudent,
-  getStudents,
-  updateStudent,
-} from './api/student';
-import Button from './components/Button';
-import StudentCard from './components/StudentCard';
-import { Student } from './types/Student';
-import H1 from './typography/H1';
-import StudentFormModal from './components/StudentFormModal';
-import { SchoolClass } from './types/Class';
-import {
   createClass,
   deleteClass,
   getClasses,
   updateClass,
 } from './api/classes';
-import { SubmitStudentEvent } from './components/StudentFormModal/StudentFormModal';
+import {
+  createStudent,
+  deleteStudent,
+  getStudents,
+  updateStudent,
+} from './api/student';
 import ClassFormModal from './components/ClassFormModal';
 import { SubmitClassEvent } from './components/ClassFormModal/ClassFormModal';
-import ManageClassModal from './components/ManageClassModal';
 import DeleteModal from './components/DeleteModal';
+import Header from './components/Header';
+import ManageClassModal from './components/ManageClassModal';
+import StudentCard from './components/StudentCard';
+import StudentFormModal from './components/StudentFormModal';
+import { SubmitStudentEvent } from './components/StudentFormModal/StudentFormModal';
+import { SchoolClass } from './types/Class';
+import { Student } from './types/Student';
 
 function App() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -97,22 +96,13 @@ function App() {
 
   // FIXME: paddings not 100% accurate
   return (
-    <div className="py-4 px-10">
-      <div className="flex justify-between items-center w-full mb-[34px]">
-        <H1>Student Manager</H1>
+    <div className="p-7 lg:py-4 lg:px-10">
+      <Header
+        onCreateClassClick={() => setIsClassFormModalOpen(true)}
+        onCreateStudentClick={() => setIsStudentFormModalOpen(true)}
+        onManageClassClick={() => setIsManageClassModalOpen(true)}
+      />
 
-        <div className="flex gap-[14px]">
-          <Button onClick={() => setIsStudentFormModalOpen(true)}>
-            Create student
-          </Button>
-          <Button onClick={() => setIsClassFormModalOpen(true)}>
-            Create class
-          </Button>
-          <Button onClick={() => setIsManageClassModalOpen(true)}>
-            Manage classes
-          </Button>
-        </div>
-      </div>
       <div className="flex flex-wrap gap-[45px]">
         {students.map((student) => {
           return (

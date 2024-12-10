@@ -3,8 +3,8 @@ import ClickableIcon from '../ClickableIcon';
 import { IconType } from '../ClickableIcon/ClickableIcon';
 
 type Props = {
-  onEditClick?: () => void;
-  onRemoveClick?: () => void;
+  onEditClick?: (student: Student) => void;
+  onRemoveClick?: (student: Student) => void;
   student: Student;
 };
 
@@ -38,11 +38,11 @@ const StudentCard = ({
         <div className="flex gap-[15px]">
           <ClickableIcon
             iconType={IconType.Pencil}
-            onClick={() => onEditClick?.()}
+            onClick={() => onEditClick?.(student)}
           />
           <ClickableIcon
             iconType={IconType.Bin}
-            onClick={() => onRemoveClick?.()}
+            onClick={() => onRemoveClick?.(student)}
           />
         </div>
       </div>

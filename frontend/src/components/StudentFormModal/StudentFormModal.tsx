@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SchoolClass } from '../../types/Class';
 import { Student } from '../../types/Student';
 import Button from '../Button';
@@ -8,23 +8,33 @@ import { Props as ModalProps } from '../Modal/Modal';
 import { ButtonAppearance } from '../Button/Button';
 import FormSelect from '../forms/FormSelect/FormSelect';
 
-export type CreateStudentEvent = (student: Student) => void;
+export type SubmitStudentEvent = (student: Student) => void;
 
 type Props = ModalProps & {
-  onCreateStudent?: CreateStudentEvent;
+  onSubmitStudent?: SubmitStudentEvent;
+  student: Student | null;
   schoolClasses: SchoolClass[];
 };
 
 const StudentFormModal = ({
+  student,
   schoolClasses,
-  onCreateStudent,
+  onSubmitStudent,
   ...modalProps
 }: Props): React.JSX.Element => {
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [studentNum, setStudentNum] = useState<number>();
-  const [schoolClass, setSchoolClass] = useState(schoolClasses?.[0]._id);
+  const [studentNum, setStudentNum] = useState<string>('');
+  const [schoolClass, setSchoolClass] = useState(schoolClasses[0]?._id);
+
+  useEffect(() => {
+    setFirstName(student?.firstname || '');
+    setLastName(student?.lastname || '');
+    setEmail(student?.email || '');
+    setStudentNum(student?.studentNum.toString() || '');
+    setSchoolClass(student?.class || schoolClasses[0]?._id);
+  }, [student, schoolClasses]);
 
   return (
     <Modal {...modalProps} className="min-w-[380px]">
@@ -48,7 +58,7 @@ const StudentFormModal = ({
           className="mb-[20px]"
           label="Student ID"
           value={studentNum}
-          onChange={(e) => setStudentNum(+e.target.value)}
+          onChange={(e) => setStudentNum(e.target.value)}
         />
         <FormSelect
           label="Class"
@@ -72,16 +82,17 @@ const StudentFormModal = ({
           <Button
             appearance={ButtonAppearance.Secondary}
             onClick={() =>
-              onCreateStudent?.({
+              onSubmitStudent?.({
+                _id: student?._id,
                 firstname,
                 lastname,
                 email,
-                studentNum: studentNum || 0,
+                studentNum: +studentNum || 0,
                 class: schoolClass || '',
               })
             }
           >
-            Create
+            {student ? 'Edit' : 'Create'}
           </Button>
         </div>
       </form>

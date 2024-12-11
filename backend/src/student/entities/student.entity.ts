@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
-import { SchoolClass } from 'src/school-class/entities/school-class.entity';
+import { SchoolClass } from '../../school-class/entities/school-class.entity';
 
 @Schema({
   versionKey: false,

@@ -8,6 +8,8 @@ import {
   Delete,
   HttpStatus,
   HttpException,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
@@ -18,6 +20,7 @@ import { DeleteResult } from 'mongoose';
 export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
+  @UsePipes(new ValidationPipe({ transform: true }))
   @Post()
   async create(@Body() createStudentDto: CreateStudentDto) {
     const result = await this.studentService.create(createStudentDto);

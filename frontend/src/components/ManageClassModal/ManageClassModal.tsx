@@ -20,46 +20,53 @@ const ManageClassModal = ({
 }: Props): React.JSX.Element => {
   return (
     <Modal {...modalProps} className="w-full max-w-80">
-      <table className="w-full mb-8">
-        <thead>
-          <tr>
-            <th className="py-5 px-4 text-left text-sm leading-4 text-[#00000050]">
-              Class name
-            </th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {classes.map((schoolClass) => {
-            return (
-              <tr
-                className="odd:bg-[#00000010] hover:bg-[#00000030] transition-all"
-                key={`tr-${schoolClass._id}`}
-              >
-                <td className="w-full p-4 text-sm">
-                  {schoolClass.year}-{schoolClass.name}
-                </td>
-                <td>
-                  {/* Buttons */}
-                  <div className="flex gap-[15px] mr-8">
-                    <ClickableIcon
-                      size={IconSize.Small}
-                      className="h-[19px]"
-                      iconType={IconType.Pencil}
-                      onClick={() => onEditClick?.(schoolClass)}
-                    />
-                    <ClickableIcon
-                      size={IconSize.Small}
-                      iconType={IconType.Bin}
-                      onClick={() => onRemoveClick?.(schoolClass)}
-                    />
-                  </div>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {classes.length === 0 && (
+        <p className="text-dimmed">
+          No classes to display. Please create a class
+        </p>
+      )}
+      {!!classes.length && (
+        <table className="w-full mb-8">
+          <thead>
+            <tr>
+              <th className="py-5 px-4 text-left text-sm leading-4 text-[#00000050]">
+                Class name
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {classes.map((schoolClass) => {
+              return (
+                <tr
+                  className="odd:bg-[#00000010] hover:bg-[#00000030] transition-all"
+                  key={`tr-${schoolClass._id}`}
+                >
+                  <td className="w-full p-4 text-sm">
+                    {schoolClass.year}-{schoolClass.name}
+                  </td>
+                  <td>
+                    {/* Buttons */}
+                    <div className="flex gap-[15px] mr-8">
+                      <ClickableIcon
+                        size={IconSize.Small}
+                        className="h-[19px]"
+                        iconType={IconType.Pencil}
+                        onClick={() => onEditClick?.(schoolClass)}
+                      />
+                      <ClickableIcon
+                        size={IconSize.Small}
+                        iconType={IconType.Bin}
+                        onClick={() => onRemoveClick?.(schoolClass)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
       <div className="flex justify-end gap-2">
         <Button
           appearance={ButtonAppearance.Secondary}

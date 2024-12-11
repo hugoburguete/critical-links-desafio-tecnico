@@ -4,8 +4,10 @@ import Button from '../Button';
 import ClickableIcon from '../ClickableIcon';
 import { IconSize, IconType } from '../ClickableIcon/ClickableIcon';
 import cx from 'classnames';
+import { SchoolClass } from '../../types/Class';
 
 type Props = {
+  schoolClasses: SchoolClass[];
   onCreateStudentClick: () => void;
   onCreateClassClick: () => void;
   onManageClassClick: () => void;
@@ -15,6 +17,7 @@ const Header = ({
   onCreateStudentClick,
   onCreateClassClick,
   onManageClassClick,
+  schoolClasses,
 }: Props): React.JSX.Element => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -46,6 +49,7 @@ const Header = ({
           onClick={() => setIsMenuOpen(false)}
         />
         <Button
+          disabled={!schoolClasses.length}
           onClick={() => {
             setIsMenuOpen(false);
             onCreateStudentClick();

@@ -26,6 +26,7 @@ const Button = ({
             appearance === ButtonAppearance.Primary,
           'px-2 py-[6px] text-blue bg-none outline-none uppercase font-medium font-roboto tracking-[0.4px]':
             appearance === ButtonAppearance.Secondary,
+          'opacity-50 cursor-not-allowed': rest.disabled,
         },
         className,
       )}

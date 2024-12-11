@@ -94,7 +94,7 @@ function App() {
   };
 
   return (
-    <div className="p-7 lg:py-4 lg:px-10">
+    <div className="p-7 lg:py-4 lg:px-10 bg-verylightgrey min-h-screen">
       <Header
         onCreateClassClick={() => setIsClassFormModalOpen(true)}
         onCreateStudentClick={() => setIsStudentFormModalOpen(true)}

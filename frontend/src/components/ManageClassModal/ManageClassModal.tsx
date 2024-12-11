@@ -19,8 +19,8 @@ const ManageClassModal = ({
   ...modalProps
 }: Props): React.JSX.Element => {
   return (
-    <Modal {...modalProps} className="w-full max-w-[284px]">
-      <table className="w-full  mb-8">
+    <Modal {...modalProps} className="w-full max-w-80">
+      <table className="w-full mb-8">
         <thead>
           <tr>
             <th className="py-5 px-4 text-left text-sm leading-4 text-[#00000050]">
@@ -32,7 +32,10 @@ const ManageClassModal = ({
         <tbody>
           {classes.map((schoolClass) => {
             return (
-              <tr className="odd:bg-[#00000010]" key={`tr-${schoolClass._id}`}>
+              <tr
+                className="odd:bg-[#00000010] hover:bg-[#00000030] transition-all"
+                key={`tr-${schoolClass._id}`}
+              >
                 <td className="w-full p-4 text-sm">
                   {schoolClass.year}-{schoolClass.name}
                 </td>

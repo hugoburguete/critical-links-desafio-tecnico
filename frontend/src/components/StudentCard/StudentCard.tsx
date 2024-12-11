@@ -1,6 +1,6 @@
 import { Student } from '../../types/Student';
 import ClickableIcon from '../ClickableIcon';
-import { IconType } from '../ClickableIcon/ClickableIcon';
+import { IconSize, IconType } from '../ClickableIcon/ClickableIcon';
 
 type Props = {
   onEditClick?: (student: Student) => void;
@@ -14,22 +14,22 @@ const StudentCard = ({
   onRemoveClick,
 }: Props): React.JSX.Element => {
   return (
-    <div className="w-full rounded-3xl bg-white card-box-shadow p-5">
+    <div className="w-full rounded-lg bg-verylightgrey p-3">
       {/* Card body */}
-      <div className="flex gap-[30px] justify-between">
+      <div className="flex gap-3 justify-between items-center">
         {/* Profile picture */}
-        <div className="hidden xl:block rounded-full bg-lightgrey w-[90px] h-[90px]"></div>
+        <div className="hidden xl:block rounded-full bg-lightgrey min-w-[90px] w-[90px] h-[90px] min-h-[90px]"></div>
 
         {/* Details */}
         <div className="min-w-0">
-          <p className="font-sans font-bold text-[22px] leading-[30px] overflow-hidden text-ellipsis">
+          <p className="font-sans font-bold overflow-hidden text-ellipsis mb-2 uppercase tracking-tight">
             {`${student.firstname} ${student.lastname}`}
           </p>
-          <p className="font-sans font-light text-[22px] leading-[30px] overflow-hidden text-ellipsis">
-            {student.email}
+          <p className="font-sans font-light leading-5 overflow-hidden text-ellipsis text-nowrap">
+            Email: <span className="text-dimmed">{student.email}</span>
           </p>
-          <p className="font-sans text-dimmed font-extralight text-[22px] leading-[30px] overflow-hidden text-ellipsis">
-            ID: {student.studentNum}
+          <p className="font-sans leading-5 font-extralight overflow-hidden text-ellipsis">
+            ID: <span className="text-dimmed">{student.studentNum}</span>
           </p>
         </div>
 
@@ -37,10 +37,12 @@ const StudentCard = ({
         <div className="flex gap-[15px]">
           <ClickableIcon
             iconType={IconType.Pencil}
+            size={IconSize.Small}
             onClick={() => onEditClick?.(student)}
           />
           <ClickableIcon
             iconType={IconType.Bin}
+            size={IconSize.Small}
             onClick={() => onRemoveClick?.(student)}
           />
         </div>

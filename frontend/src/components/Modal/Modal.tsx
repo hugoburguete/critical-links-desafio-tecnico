@@ -31,37 +31,42 @@ const Modal = ({
 
   return (
     <div
-      data-testid="modal-outer"
-      ref={ref}
-      className={cx(
-        'fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center ',
-        {
-          hidden: !isOpen,
-        },
-      )}
-      onClick={handleOutsideClick}
+      className={cx({
+        hidden: !isOpen,
+      })}
     >
       <div
-        className={`modal-box-shadow bg-white rounded-md px-6 py-4 ${className}`}
-        {...rest}
+        data-testid="modal-outer"
+        ref={ref}
+        className={
+          'fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-[#00000080]'
+        }
+        onClick={handleOutsideClick}
       >
-        {/* Modal header */}
-        <div className="flex justify-between mb-6">
-          <h2
-            data-testid="modal-title"
-            className="text-xl leading-8 font-medium font-roboto tracking-[0.15px]"
-          >
-            {title}
-          </h2>
+        <div
+          className={cx(`shadow-2xl bg-white rounded-md px-6 py-4`, className, {
+            'animate-fade': isOpen,
+          })}
+          {...rest}
+        >
+          {/* Modal header */}
+          <div className={'flex justify-between mb-6 '}>
+            <h2
+              data-testid="modal-title"
+              className="text-xl leading-8 font-medium font-roboto tracking-[0.15px]"
+            >
+              {title}
+            </h2>
 
-          <ClickableIcon
-            iconType={IconType.Close}
-            onClick={() => onClose?.()}
-          />
+            <ClickableIcon
+              iconType={IconType.Close}
+              onClick={() => onClose?.()}
+            />
+          </div>
+
+          {/* Modal body */}
+          <div className="">{children}</div>
         </div>
-
-        {/* Modal body */}
-        <div className="">{children}</div>
       </div>
     </div>
   );

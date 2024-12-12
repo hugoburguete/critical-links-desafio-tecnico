@@ -34,7 +34,12 @@ const StudentFormModal = ({
     setLastName(student?.lastname || '');
     setEmail(student?.email || '');
     setStudentNum(student?.studentNum.toString() || '');
-    setSchoolClass(student?.class || schoolClasses[0]?._id);
+    const existingClass = schoolClasses.find((c) => c._id === student?.class);
+    if (!existingClass || !student?.class) {
+      setSchoolClass(schoolClasses[0]?._id);
+    } else {
+      setSchoolClass(student.class);
+    }
   }, [student, schoolClasses]);
 
   const resetForm = () => {

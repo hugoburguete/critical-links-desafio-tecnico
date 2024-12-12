@@ -6,7 +6,7 @@ import { API_URL } from './common';
  */
 export const createClass = async (SchoolClass: SchoolClass) => {
   // using fetch for the sake of simplicity.
-  await fetch(`${API_URL}/school-class`, {
+  const response = await fetch(`${API_URL}/school-class`, {
     method: 'POST',
     body: JSON.stringify(SchoolClass),
     headers: {
@@ -14,6 +14,7 @@ export const createClass = async (SchoolClass: SchoolClass) => {
       'Content-Type': 'application/json',
     },
   });
+  return await response.json();
 };
 
 /**
@@ -31,7 +32,7 @@ export const getClasses = async (): Promise<SchoolClass[]> => {
  * Updates a class resource.
  */
 export const updateClass = async (schoolClass: SchoolClass) => {
-  await fetch(`${API_URL}/school-class/${schoolClass._id}`, {
+  const response = await fetch(`${API_URL}/school-class/${schoolClass._id}`, {
     method: 'PATCH',
     body: JSON.stringify(schoolClass),
     headers: {
@@ -39,6 +40,8 @@ export const updateClass = async (schoolClass: SchoolClass) => {
       'Content-Type': 'application/json',
     },
   });
+
+  return await response.json();
 };
 
 /**
@@ -46,7 +49,9 @@ export const updateClass = async (schoolClass: SchoolClass) => {
  */
 export const deleteClass = async (classId: string) => {
   // using fetch for the sake of simplicity.
-  await fetch(`${API_URL}/school-class/${classId}`, {
+  const response = await fetch(`${API_URL}/school-class/${classId}`, {
     method: 'DELETE',
   });
+
+  return await response.json();
 };

@@ -13,9 +13,12 @@ import {
 } from './api/student';
 import ClassFormModal from './components/ClassFormModal';
 import { SubmitClassEvent } from './components/ClassFormModal/ClassFormModal';
+import ClickableIcon from './components/ClickableIcon';
+import { IconSize, IconType } from './components/ClickableIcon/ClickableIcon';
 import DeleteModal from './components/DeleteModal';
 import Header from './components/Header';
-import ManageClassModal from './components/ManageClassModal';
+import ProfileModal from './components/ProfileModal';
+import SchoolClassesList from './components/SchoolClassesList';
 import StudentFormModal from './components/StudentFormModal';
 import { SubmitStudentEvent } from './components/StudentFormModal/StudentFormModal';
 import StudentList from './components/StudentList';
@@ -30,15 +33,16 @@ function App() {
   const [schoolClasses, setSchoolClasses] = useState<SchoolClass[]>([]);
   const [isStudentFormModalOpen, setIsStudentFormModalOpen] =
     useState<boolean>(false);
+  const [isStudentProfileModalOpen, setIsStudentProfileModalOpen] =
+    useState<boolean>(false);
   const [studentToUpdate, setStudentToUpdate] = useState<Student | null>(null);
   const [studentToDelete, setStudentToDelete] = useState<Student | null>(null);
   const [isClassFormModalOpen, setIsClassFormModalOpen] =
     useState<boolean>(false);
   const [classToUpdate, setClassToUpdate] = useState<SchoolClass | null>(null);
   const [classToDelete, setClassToDelete] = useState<SchoolClass | null>(null);
-  const [isManageClassModalOpen, setIsManageClassModalOpen] =
-    useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [errs, setErrs] = useState<string[]>([]);
 
   const loadData = async () => {
     const students = await getStudents();
@@ -53,10 +57,15 @@ function App() {
   }, []);
 
   const handleStudentSubmit: SubmitStudentEvent = async (student: Student) => {
+    let response;
+
     if (studentToUpdate) {
-      await updateStudent(student);
+      response = await updateStudent(student);
     } else {
-      await createStudent(student);
+      response = await createStudent(student);
+    }
+    if (response?.error) {
+      setErrs(response?.message);
     }
     setIsStudentFormModalOpen(false);
     loadData();
@@ -70,6 +79,11 @@ function App() {
   const handleRemoveStudentBtnClick = async (student: Student) => {
     setStudentToDelete(student);
     setIsDeleteModalOpen(true);
+  };
+
+  const handleViewProfileClick = async (student: Student) => {
+    setStudentToUpdate(student);
+    setIsStudentProfileModalOpen(true);
   };
 
   const handleClassSubmit: SubmitClassEvent = async (
@@ -97,72 +111,94 @@ function App() {
   };
 
   return (
-    <div className="p-7 lg:py-4 lg:px-10 bg-verylightgrey min-h-screen">
+    <div className="bg-light-blue min-h-screen pt-16">
       <Header
         schoolClasses={schoolClasses}
         onCreateClassClick={() => setIsClassFormModalOpen(true)}
         onCreateStudentClick={() => setIsStudentFormModalOpen(true)}
-        onManageClassClick={() => setIsManageClassModalOpen(true)}
       />
 
-      <StudentList
-        students={students}
-        onEditClick={handleEditStudentBtnClick}
-        onRemoveClick={handleRemoveStudentBtnClick}
-      />
+      <div className="max-w-screen-xl m-auto p-4 lg:py-4 lg:px-10">
+        {!!errs.length && (
+          <div className="bg-red-400 text-white rounded-lg p-3 mb-3 flex justify-between">
+            {errs.map((err) => {
+              return <p>{err}</p>;
+            })}
 
-      <StudentFormModal
-        schoolClasses={schoolClasses}
-        title="Create student"
-        student={studentToUpdate}
-        isOpen={isStudentFormModalOpen}
-        onSubmitStudent={handleStudentSubmit}
-        onClose={() => {
-          setStudentToUpdate(null);
-          setIsStudentFormModalOpen(false);
-        }}
-      />
+            <ClickableIcon
+              iconType={IconType.Close}
+              size={IconSize.Small}
+              onClick={() => setErrs([])}
+            />
+          </div>
+        )}
 
-      <ManageClassModal
-        title="Manage classes"
-        classes={schoolClasses}
-        isOpen={isManageClassModalOpen}
-        onEditClick={(schoolClass: SchoolClass) => {
-          setClassToUpdate(schoolClass);
-          setIsClassFormModalOpen(true);
-        }}
-        onRemoveClick={(schoolClass: SchoolClass) => {
-          setClassToDelete(schoolClass);
-          setIsDeleteModalOpen(true);
-        }}
-        onClose={() => {
-          setClassToDelete(null);
-          setClassToUpdate(null);
-          setIsManageClassModalOpen(false);
-        }}
-      />
+        <StudentList
+          students={students}
+          onEditClick={handleEditStudentBtnClick}
+          onRemoveClick={handleRemoveStudentBtnClick}
+          onViewProfileClick={handleViewProfileClick}
+        />
 
-      <ClassFormModal
-        title="Create class"
-        schoolClass={classToUpdate}
-        isOpen={isClassFormModalOpen}
-        onSubmitClass={handleClassSubmit}
-        onClose={() => {
-          setClassToUpdate(null);
-          setIsClassFormModalOpen(false);
-        }}
-      />
+        <SchoolClassesList
+          classes={schoolClasses}
+          onEditClick={(schoolClass: SchoolClass) => {
+            setClassToUpdate(schoolClass);
+            setIsClassFormModalOpen(true);
+          }}
+          onRemoveClick={(schoolClass: SchoolClass) => {
+            setClassToDelete(schoolClass);
+            setIsDeleteModalOpen(true);
+          }}
+        />
 
-      <DeleteModal
-        title="Are you sure you want to delete?"
-        isOpen={isDeleteModalOpen}
-        onClose={() => {
-          setClassToDelete(null);
-          setStudentToDelete(null);
-          setIsDeleteModalOpen(false);
-        }}
-        onConfirm={handleDelete}
-      />
+        <StudentFormModal
+          schoolClasses={schoolClasses}
+          title="Create student"
+          student={studentToUpdate}
+          isOpen={isStudentFormModalOpen}
+          onSubmitStudent={handleStudentSubmit}
+          onClose={() => {
+            setStudentToUpdate(null);
+            setIsStudentFormModalOpen(false);
+          }}
+        />
+
+        {studentToUpdate && (
+          <ProfileModal
+            title={`Student #${studentToUpdate.studentNum}`}
+            student={studentToUpdate}
+            classes={schoolClasses}
+            isOpen={isStudentProfileModalOpen}
+            onClose={() => {
+              setStudentToUpdate(null);
+              setIsStudentProfileModalOpen(false);
+            }}
+          />
+        )}
+
+        <ClassFormModal
+          title="Create class"
+          schoolClass={classToUpdate}
+          isOpen={isClassFormModalOpen}
+          onSubmitClass={handleClassSubmit}
+          onClose={() => {
+            setClassToUpdate(null);
+            setIsClassFormModalOpen(false);
+          }}
+        />
+
+        <DeleteModal
+          title="Are you sure you want to delete?"
+          isOpen={isDeleteModalOpen}
+          onClose={() => {
+            setClassToDelete(null);
+            setStudentToDelete(null);
+            setIsDeleteModalOpen(false);
+          }}
+          onConfirm={handleDelete}
+        />
+      </div>
     </div>
   );
 }

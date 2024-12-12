@@ -10,6 +10,7 @@ type Props = React.DetailedHTMLProps<
 export enum ButtonAppearance {
   Primary,
   Secondary,
+  Link,
 }
 
 const Button = ({
@@ -22,10 +23,12 @@ const Button = ({
     <button
       className={cx(
         {
-          'rounded-lg p-[14px] bg-blue text-white w-[170px] text-center text-lg  leading-6':
+          'rounded-3xl py-2 px-5 bg-primary text-white text-center text-lg leading-6':
             appearance === ButtonAppearance.Primary,
-          'px-2 py-[6px] text-blue bg-none outline-none uppercase font-medium font-roboto tracking-[0.4px]':
+          'px-2 py-[6px] text-primary bg-none outline-none uppercase font-medium font-roboto tracking-[0.4px]':
             appearance === ButtonAppearance.Secondary,
+          'text-primary bg-none outline-none hover:opacity-80':
+            appearance === ButtonAppearance.Link,
           'opacity-50 cursor-not-allowed': rest.disabled,
         },
         className,

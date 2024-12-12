@@ -13,7 +13,7 @@ const FormInput = ({ className, label, ...rest }: Props): React.JSX.Element => {
       </label>
       <input
         placeholder={label}
-        className={`w-full mb-8 border-transparent border-b-[1px] border-b-black border-b-solid focus:outline-none focus:border-transparent focus:border-b-blue px-0 py-1 ${className}`}
+        className={`w-full mb-8 border-transparent border-b-[1px] border-b-black border-b-solid focus:outline-none focus:border-transparent focus:border-b-primary px-0 py-1 ${className}`}
         {...rest}
       />
     </div>

@@ -6,7 +6,7 @@ import { API_URL } from './common';
  */
 export const createStudent = async (student: Student) => {
   // using fetch for the sake of simplicity.
-  await fetch(`${API_URL}/student`, {
+  const response = await fetch(`${API_URL}/student`, {
     method: 'POST',
     body: JSON.stringify(student),
     headers: {
@@ -14,6 +14,7 @@ export const createStudent = async (student: Student) => {
       'Content-Type': 'application/json',
     },
   });
+  return await response.json();
 };
 
 /**
@@ -31,7 +32,7 @@ export const getStudents = async () => {
  * Updates a student resource.
  */
 export const updateStudent = async (student: Student) => {
-  await fetch(`${API_URL}/student/${student._id}`, {
+  const response = await fetch(`${API_URL}/student/${student._id}`, {
     method: 'PATCH',
     body: JSON.stringify(student),
     headers: {
@@ -39,6 +40,7 @@ export const updateStudent = async (student: Student) => {
       'Content-Type': 'application/json',
     },
   });
+  return await response.json();
 };
 
 /**
@@ -46,7 +48,8 @@ export const updateStudent = async (student: Student) => {
  */
 export const deleteStudent = async (studentId: string) => {
   // using fetch for the sake of simplicity.
-  await fetch(`${API_URL}/student/${studentId}`, {
+  const response = await fetch(`${API_URL}/student/${studentId}`, {
     method: 'DELETE',
   });
+  return await response.json();
 };

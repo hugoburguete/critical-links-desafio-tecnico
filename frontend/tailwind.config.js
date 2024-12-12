@@ -10,11 +10,12 @@ module.exports = {
         roboto: ['"Roboto"'],
       },
       colors: {
+        'light-blue': '#e6eaf8',
         verylightgrey: '#F8F9FA',
         grey: '#5B5B5B',
         lightgrey: '#D9D9D9',
         dimmed: '#9A9A9A',
-        blue: '#4E87F8',
+        primary: '#7f9efd',
       },
       animation: {
         fade: 'fadeOut 0.2s ease-in-out',

@@ -32,14 +32,14 @@ const Modal = ({
   return (
     <div
       data-testid="modal-outer"
-      className={cx({
+      className={cx('relative z-30', {
         hidden: !isOpen,
       })}
     >
       <div
         ref={ref}
         className={
-          'fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center bg-[#00000080]'
+          'fixed top-0 bottom-0 left-0 right-0 flex justify-center items-center max-h-screen overflow-y-auto bg-[#00000080]'
         }
         onClick={handleOutsideClick}
       >

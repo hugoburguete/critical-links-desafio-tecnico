@@ -8,7 +8,7 @@ const H1 = (props: Props): React.JSX.Element => {
   const { children, className } = props;
   return (
     <h1
-      className={`text-3xl leading-[25px] font-sans font-semibold text-grey ${className}`}
+      className={`text-2xl sm:text-3xl leading-[25px] font-sans font-semibold text-grey ${className}`}
     >
       {children}
     </h1>

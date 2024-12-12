@@ -133,15 +133,9 @@ function App() {
           </div>
         )}
 
-        <StudentList
-          students={students}
-          onEditClick={handleEditStudentBtnClick}
-          onRemoveClick={handleRemoveStudentBtnClick}
-          onViewProfileClick={handleViewProfileClick}
-        />
-
         <SchoolClassesList
           classes={schoolClasses}
+          onAddClick={() => setIsClassFormModalOpen(true)}
           onEditClick={(schoolClass: SchoolClass) => {
             setClassToUpdate(schoolClass);
             setIsClassFormModalOpen(true);
@@ -151,6 +145,18 @@ function App() {
             setIsDeleteModalOpen(true);
           }}
         />
+
+        <div className="border-gray-400 mb-4 border-solid border-b-[1px] w-full h-1" />
+
+        {!!schoolClasses.length && (
+          <StudentList
+            students={students}
+            onAddClick={() => setIsStudentFormModalOpen(true)}
+            onEditClick={handleEditStudentBtnClick}
+            onRemoveClick={handleRemoveStudentBtnClick}
+            onViewProfileClick={handleViewProfileClick}
+          />
+        )}
 
         <StudentFormModal
           schoolClasses={schoolClasses}

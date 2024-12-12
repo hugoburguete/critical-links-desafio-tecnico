@@ -18,7 +18,7 @@ const ThreeDotsMenu = ({ dropdownButtons }: Props) => {
   useOutsideClick(wrapperRef, () => setIsOpen(false));
 
   return (
-    <div className="relative" ref={wrapperRef}>
+    <div className="relative z-10" ref={wrapperRef}>
       <div
         className="flex flex-col items-center gap-0.5 w-4 hover:cursor-pointer"
         onClick={() => setIsOpen(true)}

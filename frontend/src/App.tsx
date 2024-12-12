@@ -22,6 +22,9 @@ import StudentList from './components/StudentList';
 import { SchoolClass } from './types/Class';
 import { Student } from './types/Student';
 
+/**
+ * Application entry point.
+ */
 function App() {
   const [students, setStudents] = useState<Student[]>([]);
   const [schoolClasses, setSchoolClasses] = useState<SchoolClass[]>([]);

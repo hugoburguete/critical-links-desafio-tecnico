@@ -112,7 +112,9 @@ const StudentFormModal = ({
               value: `${schoolClass._id}`,
             };
           })}
-          onChange={(e) => setSchoolClass(e.target.value)}
+          onChange={(e) => {
+            setSchoolClass(e?.value);
+          }}
         />
 
         <div className="flex justify-end gap-2">

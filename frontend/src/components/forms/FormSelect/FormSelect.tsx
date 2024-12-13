@@ -1,11 +1,12 @@
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 
-type Props = React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLSelectElement>,
-  HTMLSelectElement
-> & {
+type Props = {
   label: string;
   options: Option[];
+  value: string | undefined;
+  id?: string;
+  required?: boolean;
+  onChange: (val: SingleValue<Option>) => void;
 };
 
 export type Option = {
@@ -14,21 +15,23 @@ export type Option = {
 };
 
 const FormSelect = ({
-  className,
   label,
   options,
-  ...rest
+  id,
+  value,
+  required,
+  onChange,
 }: Props): React.JSX.Element => {
   return (
     <div>
       <label
         className="text-xs text-[#00000061] tracking-[0.15px]"
-        htmlFor={rest.id}
+        htmlFor={id}
       >
         {label}
       </label>
       <Select
-        value={options.find((opt) => opt.value === rest.value)}
+        value={options.find((opt) => opt.value === value)}
         styles={{
           control: (styles) => ({
             ...styles,
@@ -41,7 +44,9 @@ const FormSelect = ({
           }),
           indicatorSeparator: (styles) => ({}),
         }}
-        id={rest.id}
+        required={required}
+        onChange={onChange}
+        id={id}
         options={options}
         placeholder={label}
       />

@@ -18,7 +18,6 @@ const ProfileModal = ({
   ...modalProps
 }: Props): React.JSX.Element => {
   const studentClass = classes.find((c) => c._id === student.class);
-  console.log(classes, studentClass, student.class);
   return (
     <Modal {...modalProps} className="w-full max-w-[380px]">
       {/* Card body */}

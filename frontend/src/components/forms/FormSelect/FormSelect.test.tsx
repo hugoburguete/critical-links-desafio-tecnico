@@ -6,7 +6,14 @@ describe('FormSelect', () => {
     const label = 'To be';
     const value = 'to-be';
 
-    render(<FormSelect label="label" options={[{ label, value }]} />);
+    render(
+      <FormSelect
+        value=""
+        onChange={() => {}}
+        label="label"
+        options={[{ label, value }]}
+      />,
+    );
 
     const option = screen.getByTestId(`option-${value}`);
     expect(option).toBeInTheDocument();

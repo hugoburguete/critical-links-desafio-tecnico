@@ -1,3 +1,5 @@
+import Select from 'react-select';
+
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLSelectElement>,
   HTMLSelectElement
@@ -25,21 +27,24 @@ const FormSelect = ({
       >
         {label}
       </label>
-      <select
+      <Select
+        value={options.find((opt) => opt.value === rest.value)}
+        styles={{
+          control: (styles) => ({
+            ...styles,
+            border: 'none',
+            boxShadow: 'none',
+            borderRadius: 'none',
+            outline: 'none',
+            borderBottom: '1px solid black',
+            marginBottom: '16px',
+          }),
+          indicatorSeparator: (styles) => ({}),
+        }}
+        id={rest.id}
+        options={options}
         placeholder={label}
-        className={`w-full mb-4 px-0 py-2 bg-white border-transparent border-b-black border-solid border-b-[1px] ${className}`}
-        {...rest}
-      >
-        {options.map((option) => (
-          <option
-            key={option.value}
-            value={option.value}
-            data-testid={`option-${option.value}`}
-          >
-            {option.label}
-          </option>
-        ))}
-      </select>
+      />
     </div>
   );
 };
